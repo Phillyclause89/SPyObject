@@ -9,7 +9,7 @@ class SPyObject:
     def obj_info(self):
         print(
             f"{'_' * 75}\n\n"
-            f"\033[1;35mName Assignments:\033[1;m "
+            f"\033[1;35mName Assignment(s):\033[1;m "
             f"{self.name}"
             f"\n\n\033[1;35mReturn Value:\033[1;m "
             f"{self.obj}"
@@ -24,7 +24,7 @@ class SPyObject:
         names = []
         for key, x in items.items():
             if x is self.obj and key is not None:
-                names.append(f"{key} {x}")
+                names.append(f"{key} <variable {key} at {hex(id(key)).upper()}>")
             if "<function" in str(x):
                 try:
                     if str(self.obj) == str(eval(f"{key}()")):
@@ -43,22 +43,25 @@ class SPyObject:
 
 if __name__ == "__main__":
     def tester():
-        return 1
+        return "Hello World"
 
     FucCaller = tester()
     SPyObject(FucCaller).obj_info()
 
     class Tester():
+        '''Some __doc__ text!'''
         def __init__(self, X):
             self.x = X
 
-        def showx(self):
+        def show_x(self):
             return self.x
 
-    ClsCaller = Tester(5)
+    ClsCaller = Tester(420)
     SPyObject(ClsCaller).obj_info()
-    ClsMetCaller = ClsCaller.showx()
+
+    ClsMetCaller = ClsCaller.show_x()
     SPyObject(ClsMetCaller).obj_info()
+
     ClsAttrCaller = ClsCaller.x
     SPyObject(ClsAttrCaller).obj_info()
 
