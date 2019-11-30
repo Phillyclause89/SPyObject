@@ -48,8 +48,8 @@ if __name__ == "__main__":
     FucCaller = tester()
     SPyObject(FucCaller).obj_info()
 
-    class Tester():
-        '''Some __doc__ text!'''
+    class Tester:
+        """Some __doc__ text!"""
         def __init__(self, X):
             self.x = X
 
