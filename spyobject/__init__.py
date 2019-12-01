@@ -36,8 +36,9 @@ class SPyObject:
                     pass
                 except NameError:
                     pass
-            if "items" in dir(x) and len(x) > 0 and self.get_obj_name(items=x) is not None:
-                return self.get_obj_name(items=x)
+            if "items" in dir(x) and self.get_obj_name(items=x) is not None:
+                if len(x) > 0:
+                    names.append(self.get_obj_name(items=x))
         return names
 
 
@@ -64,4 +65,7 @@ if __name__ == "__main__":
 
     ClsAttrCaller = ClsCaller.x
     SPyObject(ClsAttrCaller).obj_info()
+
+    x = 9999
+    SPyObject(x).obj_info()
 
