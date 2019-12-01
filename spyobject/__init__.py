@@ -5,6 +5,9 @@ class SPyObject:
         self.name = self.get_obj_name(self.scope)
         self.type = type(self.obj)
         self.docstr = self.obj.__doc__
+        self.attributes = dir(self.obj)
+        if len(self.name) == 0:
+            self.name = f"No Assignments Found for {self.obj}"
 
     def obj_info(self):
         print(
@@ -20,9 +23,9 @@ class SPyObject:
             f"\n{'_' * 75}"
         )
 
-    def get_obj_name(self, items=globals()):
+    def get_obj_name(self, scope):
         names = []
-        for key, x in items.items():
+        for key, x in scope.items():
             if x is self.obj and key is not None:
                 names.append(f"{key} <variable {key} at {hex(id(key)).upper()}>")
             if "<function" in str(x):
@@ -36,9 +39,9 @@ class SPyObject:
                     pass
                 except NameError:
                     pass
-            if "items" in dir(x) and self.get_obj_name(items=x) is not None:
+            if "items" in dir(x) and self.get_obj_name(scope=x) is not None:
                 if len(x) > 0:
-                    names.append(self.get_obj_name(items=x))
+                    names.append(self.get_obj_name(scope=x))
         return names
 
 
@@ -51,21 +54,21 @@ if __name__ == "__main__":
 
     class Tester:
         """Some __doc__ text!"""
-        def __init__(self, X):
-            self.x = X
+        def __init__(self, V):
+            self.v = V
 
-        def show_x(self):
-            return self.x
+        def show_v(self):
+            return self.v
 
     ClsCaller = Tester(420)
     SPyObject(ClsCaller).obj_info()
 
-    ClsMetCaller = ClsCaller.show_x()
+    ClsMetCaller = ClsCaller.show_v()
     SPyObject(ClsMetCaller).obj_info()
 
-    ClsAttrCaller = ClsCaller.x
+    ClsAttrCaller = ClsCaller.v
     SPyObject(ClsAttrCaller).obj_info()
 
-    x = 9999
-    SPyObject(x).obj_info()
+    n = 9999
+    SPyObject(n).obj_info()
 
