@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='SPyObject',
-    version='0.1.21',
+    version='0.1.23',
     packages=['spyobject'],
     url='https://github.com/Phillyclause89/SPyObject',
     license='Apache License 2.0',
